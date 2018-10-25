@@ -1,6 +1,6 @@
 # Test_AES_interface
 
-# 需准备库：pycryptodome,configparser,requests,xlrd,xlutils,inspect
+# 需准备库：pycryptodome,configparser,requests,xlrd,xlutils,inspect，xlwt
 加密接口自动化测试
 
 config.ini文件为配置文件，代码读取文件执行
