@@ -14,7 +14,7 @@ class AESmodel(object):
     def __init__(self):
         self.cf = configparser.ConfigParser()
         self.cf.read(configpath, encoding='utf-8')  # 通过utf-8编码读取文件
-        key = str(self.cf.get("KEYS", u'app'))   # 读取的key是unicode编码，使用str()转换为字符串
+        key = str(self.cf.get("KEYS", u'appname'))   # 读取的key是unicode编码，使用str()转换为字符串
         self.block_size = int(self.cf.get("PADDING", 'block_size'))
         # self.cipher = AES.new(self.pad_key(key), AES.MODE_ECB)
         self.cipher = AES.new(key, AES.MODE_ECB)
