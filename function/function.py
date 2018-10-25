@@ -11,8 +11,7 @@ class pub(object):
     def check_res(self, data, real):
         """
         断言检测接口返回与定义是否相同，接口是否正常
-        :param title:接口测试点标题
-        :param think:预期结果
+        :param data:响应数据数组，包括check所用title,url,checkData--think期望结果
         :param real:实际返回结果data
         :return:
         """

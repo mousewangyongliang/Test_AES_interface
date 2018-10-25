@@ -93,5 +93,4 @@ class interFace(object):
         style.font = font
         return style
 a = interFace()
-# a.get_param_by_excel('login')
 a.run_test()
