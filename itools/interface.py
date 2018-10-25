@@ -5,6 +5,7 @@ sys.setdefaultencoding("utf8")
 import requests
 from aesItools import AESmodel
 import xlrd
+import xlwt
 from xlutils.copy import copy
 import os
 from function.function import pub
@@ -31,9 +32,13 @@ class interFace(object):
         res = requests.post(url=sendUrl, data=send_params, headers=self.headers)
         response = self.ci.decrypt(res.text)     # 接口返回的结果
         print(response)
-        self.write_result(data, 4, self.pub.resultwrap(response))     # 写入excel实际返回结果
-        is_pass = self.pub.check_res(data['title'], data['checkData'], response)  # 断言检测
-        self.write_result(data, 5, is_pass)      # 接口测试是否通过
+        self.write_result(data, 4, self.pub.resultwrap(response), 0)     # 写入excel实际返回结果
+        is_pass = self.pub.check_res(data, response)  # 断言检测
+        if is_pass == '测试通过':
+            self.write_result(data, 5, is_pass, 3)  # 接口测试是否通过
+        else:
+            self.write_result(data, 5, u'测试不通过', 2)  # 接口测试是否通过
+
 
 
     def get_param_by_excel(self, names):
@@ -58,16 +63,17 @@ class interFace(object):
             self.test_url(data)     # 循环每个参数驱动，进行接口测试
 
 
-    def write_result(self, data, col, response):
+    def write_result(self, data, col, response, color):
         """
         将测试结果写入excel表中
         :param data:row行数据、workbook工作簿数据
         :param col: 要插入的列
         :param response: 插入的结果
+        :param color: 字体颜色
         :return:
         """
         s = self.wb.get_sheet(data['workbook'])
-        s.write(data['row'], col, response)
+        s.write(data['row'], col, response, self.set_color(color))
         self.wb.save(excelpath)
 
 
@@ -80,6 +86,12 @@ class interFace(object):
         for names in nameList:
             self.get_param_by_excel(names)
 
+    def set_color(self, color):
+        style = xlwt.XFStyle()
+        font = xlwt.Font()
+        font.colour_index = color
+        style.font = font
+        return style
 a = interFace()
 # a.get_param_by_excel('login')
 a.run_test()

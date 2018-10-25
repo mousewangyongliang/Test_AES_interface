@@ -53,7 +53,7 @@ class AESmodel(object):
         res = self.cipher.decrypt(basedata)
         result = Padding.unpad(res, block_size=self.block_size, style='pkcs7')      # 使用库自带的删除填充
         # return json.loads(result)
-        return result.encode('utf-8')
+        return result.decode('unicode_escape')
 
 # a = AESmodel()
 # a.encrypt('1234567890')
