@@ -102,5 +102,8 @@ class interFace(object):
         font.colour_index = color
         style.font = font
         return style
-a = interFace()
-a.run_test()
+
+
+if __name__ == '__main__':
+    a = interFace()
+    a.run_test()
