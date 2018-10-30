@@ -14,10 +14,11 @@ class AESmodel(object):
     def __init__(self):
         self.cf = configparser.ConfigParser()
         self.cf.read(configpath, encoding='utf-8')  # 通过utf-8编码读取文件
-        key = str(self.cf.get("KEYS", u'appname'))   # 读取的key是unicode编码，使用str()转换为字符串
+        key = str(self.cf.get("KEYS", u'key'))   # 读取的key是unicode编码，使用str()转换为字符串
         self.block_size = int(self.cf.get("PADDING", 'block_size'))
         # self.cipher = AES.new(self.pad_key(key), AES.MODE_ECB)
         self.cipher = AES.new(key, AES.MODE_ECB)
+        self.excel = self.cf.get("EXCEL", 'excelname')      # 获取excel文件名
 
     # # 加密内容需要长达16位字符，所以进行空格拼接
     # def pad(self, text):

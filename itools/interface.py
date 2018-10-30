@@ -10,12 +10,12 @@ from xlutils.copy import copy
 import os
 from function.function import pub
 Dir = os.path.dirname(os.path.abspath(__file__))
-excelpath = os.path.join(os.path.dirname(Dir), 'excel\\funsee.xls')     # excel表格地址
 
 class interFace(object):
     def __init__(self):
         self.ci = AESmodel()
-        self.excel = xlrd.open_workbook(excelpath)
+        self.excelpath = os.path.join(os.path.dirname(Dir), 'excel\\'+self.ci.excel)     # excel表格地址
+        self.excel = xlrd.open_workbook(self.excelpath)
         self.wb = copy(self.excel)
         self.pub = pub()
         self.headers = {'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -84,7 +84,7 @@ class interFace(object):
         """
         s = self.wb.get_sheet(data['workbook'])
         s.write(data['row'], col, response, self.set_color(color))
-        self.wb.save(excelpath)
+        self.wb.save(self.excelpath)
 
 
     def run_test(self):
