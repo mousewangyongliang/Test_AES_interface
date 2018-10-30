@@ -30,14 +30,24 @@ class interFace(object):
         sendUrl = url + data['url']
         send_params = 'encrypt=' + self.ci.encrypt(data['params'])      # 接口定义请求参数需要encrypt=*****
         res = requests.post(url=sendUrl, data=send_params, headers=self.headers)
-        response = self.ci.decrypt(res.text)     # 接口返回的结果
-        print(response)
-        self.write_result(data, 4, self.pub.resultwrap(response), 0)     # 写入excel实际返回结果
-        is_pass = self.pub.check_res(data, response)  # 断言检测
-        if is_pass == '测试通过':
-            self.write_result(data, 5, is_pass, 3)  # 接口测试是否通过
-        else:
-            self.write_result(data, 5, u'测试不通过', 2)  # 接口测试是否通过
+
+        try:
+            """接口正常"""
+            response = self.ci.decrypt(res.text)     # 接口返回的结果
+            self.write_result(data, 4, self.pub.resultwrap(response), 0)  # 写入excel实际返回结果
+            is_pass = self.pub.check_res(data, response)  # 断言检测
+            if is_pass == '测试通过':
+                self.write_result(data, 5, is_pass, 3)  # 接口测试是否通过
+            else:
+                self.write_result(data, 5, u'测试不通过', 2)  # 接口测试是否通过
+        except Exception as e:
+            """接口报错"""
+            print(e)
+            print('%s-%s:---%s,%s接口报错' % ('interface/test_url', '35', data['url'], data['title']))
+            response = res.text
+
+            self.write_result(data, 4, self.pub.resultwrap(response), 0)  # 写入excel实际返回结果
+            self.write_result(data, 5, u'接口报错', 2)  # 接口报错,写入字体颜色为红色
 
 
 
