@@ -6,10 +6,9 @@
 config.ini文件为配置文件，代码读取文件执行
 
 [KEY]：AES加密key，
-
-[API]:接口host地址
-
-[PADDING]:填充边界值
+[API]:接口host地址，
+[PADDING]:填充边界值，
+[EXCEL]:excel表格文件名，以.xls格式
 
 excel目录中存储接口测试用例，代码将读取该xls文件的case进行测试
 
